@@ -16,6 +16,7 @@ const EditCollege = () => {
   useEffect(() => {
     collegeService.getCollegeById(id)
       .then((response) => {
+        
         setCollege(response.data);
       })
       .catch((error) => {
@@ -27,10 +28,11 @@ const EditCollege = () => {
     const value = e.target.value;
     setCollege({ ...college, [e.target.name]: value });
   };
-
+   
   const updateCollege = (e) => {
+    console.log(college);
     e.preventDefault();
-    collegeService.updateCollegeById(college.id, college)
+    collegeService.updateCollegeById(college)
       .then((response) => {
         navigate('/');
       })
@@ -54,8 +56,8 @@ const EditCollege = () => {
                     <input
                       type='text'
                       className='form-control'
-                      name="collegeName"
-                      value={college.name}
+                      name="name"
+                      defaultValue={college.name}
                       onChange={handleChange}
                     />
                   </div>

@@ -24,7 +24,7 @@ const AddBranch = () => {
     e.preventDefault();
     collegeService.saveBranch(id,branch) 
       .then((res) => {
-        dispatch(addnewBranch({ id: id, branch: branch }));
+        dispatch(addnewBranch({ id: id, branch: res.data }));
         setMsg("Branch saved successfully");
         navigate("/branches/"+id);
       })

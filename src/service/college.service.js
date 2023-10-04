@@ -35,8 +35,9 @@ class CollegeService {
             });
     }
 
-    updateCollegeById(id, college) {
-        return axios.put(BASE_API_URL + '/' + id, college)
+    updateCollegeById(college) {
+        console.log(college);
+        return axios.put(BASE_API_URL + '/' , college)
             .catch(error => {
                 console.error('Error updating college by ID:', error);
                 
@@ -61,6 +62,21 @@ class CollegeService {
         return axios.delete(BASE_API_URL  +"/" + cid+'/branches/'+bid)
          .catch(error => {
                 console.error('Error deleting branch by ID:', error);
+            });
+    }
+    getBranchById(cid,bid){
+        //console.log(cid, bid);
+        return axios.get(BASE_API_URL  +"/" + cid+'/branches/'+bid)
+        .catch(error => {
+                console.error('Error getting branch by ID:', error);
+            });
+    }
+    updateBranchById(cid,bid,branch){
+        console.log("this is branch update")
+        console.log(cid, bid,branch);
+        return axios.put(BASE_API_URL  +"/" + cid+'/branches/'+bid, branch)
+        .catch(error => {
+                console.error('Error updating branch by ID:', error);
             });
     }
 }

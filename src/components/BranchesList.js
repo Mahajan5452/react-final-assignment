@@ -2,40 +2,52 @@ import React, { useEffect, useState } from 'react'
 import collegeService from '../service/college.service';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBranch } from '../slice/CollegeSlice';
+import { addBranch, deletebranch } from '../slice/CollegeSlice';
 
 const BranchesList = () => {
   const { colleges} = useSelector((state) => state.college);
-  //const dispatch= useDispatch();
+  const dispatch= useDispatch();
     console.log(colleges);
     const[branches,setbranches] =useState([]);
     const { id } = useParams();
     const navigate=useNavigate();
     
-   const index = colleges.findIndex(college => college.id.toString() === id);
+   const index = colleges.findIndex(college => college.id == id);
      const branch= colleges[index].branches;
-    console.log(branch);
-    useEffect(() => {
-        collegeService.getAllBranchesbyClgId(id)
-          .then((response) => {
+    // console.log(branch);
+    // useEffect(() => {
+    //     collegeService.getAllBranchesbyClgId(id)
+    //       .then((response) => {
             
-            setbranches(response.data);
-            //console.log(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }, [id]);
+    //         setbranches(response.data);
+    //         //console.log(response.data);
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    //   }, [id]);
      // console.log(branches);
      
+     const handleEdit=(bid) => {
+      
+      navigate(`/edit-banches/?id=${id}&bid=${bid}`);
+     }
       const handleDeleteBranch = async (branchid) => {
-        try {
-          await collegeService.deleteBranchbyid(id, branchid);
-          
-          navigate(`/branches/${id}`);
-        } catch (error) {
-          console.error('Error deleting branch:', error);
-        }
+        console.log("branch delete");
+        collegeService.deleteBranchbyid(id,branchid)
+      .then((response) => {
+        dispatch(deletebranch(
+          {
+            id: id,
+            bid: branchid,
+          }
+        ));
+        navigate("/branches/"+id);
+        
+      })
+      .catch((error) => {
+        console.error('Error posting data:', error);
+      });
       };
       
       
@@ -61,7 +73,7 @@ const BranchesList = () => {
       <td>{b.id}</td>
       <td>{id}</td>
       <td>{b.name}</td>
-      <Link  className='btn btn-sm btn-primary'>Edit</Link>
+      <button onClick={()=>{handleEdit(b.id)}} className='btn btn-sm btn-primary'>Edit</button>
       
       <button className='btn btn-sm btn-danger ms-2' onClick={(e) => handleDeleteBranch(b.id,e)}>Delete</button>
     </tr>

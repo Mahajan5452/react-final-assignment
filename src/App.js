@@ -18,7 +18,7 @@ function App() {
         <Route path="/add-college" element={<AddCollege />} />
         <Route path="/edit-college/:id" element={<EditCollege />} />
         <Route path="/branches/:id" element={<BranchesList />} />
-        <Route path="/edit-banches/:id" element={<BranchEdit />} />
+        <Route path="/edit-banches/" element={<BranchEdit />} />
         <Route path="/branches/:id/add-barnch" element={<AddBranch />} />
       </Routes>
     </div>
