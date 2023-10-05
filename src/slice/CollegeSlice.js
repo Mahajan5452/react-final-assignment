@@ -54,7 +54,7 @@ const CollegeSlice = createSlice({
             const index = state.colleges.findIndex(college => college.id == id);
             if(index!==-1){
                 console.log("index is not null");
-                state.colleges[index].branches = state.colleges[index].branches.filter((item) => item.id !== bid);
+                state.colleges[index].branches = state.colleges[index].branches.filter((item) => item.id != bid);
             }
         },
     } 
